@@ -38,30 +38,13 @@ def objective(trial):
     preds = model.predict(X_test)
     mse = mean_squared_error(y_test, preds)
 
-    # Ensure the results directory exists
-    results_dir = './results'
-    if not os.path.exists(results_dir):
-        os.makedirs(results_dir)
-
-    # Save trial result
-    result = {
-        'n_estimators': n_estimators,
-        'max_depth': max_depth,
-        'min_samples_split': min_samples_split,
-        'min_samples_leaf': min_samples_leaf,
-        'mse': mse
-    }
-
-    result_file = os.path.join(results_dir, f"trial_{trial.number}.json")
-    with open(result_file, 'w') as f:
-        json.dump(result, f)
-    
     return mse
 
 if __name__ == '__main__':
-    study = optuna.create_study(direction='minimize')
+    db_url = 'sqlite:///results/optuna_study.db'
+    study = optuna.create_study(study_name='optuna_study', direction='minimize', storage=db_url, load_if_exists=True)
     study.optimize(objective, n_trials=100, n_jobs=-1)
     print(f"Best trial: {study.best_trial.value}")
     print(f"Best params: {study.best_trial.params}")
-    study.trials_dataframe().to_csv('/app/results/optuna_trials.csv')  # Save study as CSV
-    optuna.visualization.plot_optimization_history(study).write_html('/app/results/optuna_optimization_history.html')
+    study.trials_dataframe().to_csv('./results/optuna_trials.csv')  # Save study as CSV
+    optuna.visualization.plot_optimization_history(study).write_html('./results/optuna_optimization_history.html')

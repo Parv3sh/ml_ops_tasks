@@ -15,8 +15,8 @@ spec:
         volumeMounts:
         - name: result-volume
           mountPath: /app/results
+      restartPolicy: Never
       volumes:
       - name: result-volume
         hostPath:
           path: /mnt/data/results
-      restartPolicy: Never

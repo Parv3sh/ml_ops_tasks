@@ -4,3 +4,4 @@ numpy
 joblib
 optuna
 plotly
+sqlalchemy
