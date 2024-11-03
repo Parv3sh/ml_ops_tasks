@@ -30,9 +30,13 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t best-model-api:latest -f Dockerfile.deploy .
-      
+
+    - name: Lowercase repository name
+      id: vars
+      run: echo "REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
     - name: Push Docker image to GitHub Packages
       run: |
         echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker tag best-model-api:latest ghcr.io/${{ github.repository | toLower }}/best-model-api:latest
-        docker push ghcr.io/${{ github.repository | toLower }}/best-model-api:latest
+        docker tag best-model-api:latest ghcr.io/${{ env.REPO_NAME }}/best-model-api:latest
+        docker push ghcr.io/${{ env.REPO_NAME }}/best-model-api:latest
