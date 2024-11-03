@@ -2,3 +2,4 @@ flask
 pandas
 joblib
 scikit-learn  # Required to load and use the model trained with scikit-learn
+pytest
