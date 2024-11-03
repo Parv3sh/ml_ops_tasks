@@ -1,0 +1,17 @@
+# scikit-learn
+# pandas
+# numpy
+# joblib
+# optuna
+# plotly
+# sqlalchemy
+# psycopg2-binary
+# flask
+
+optuna
+scikit-learn
+pandas
+plotly
+sqlalchemy
+psycopg2-binary
+joblib

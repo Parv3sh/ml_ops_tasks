@@ -1,0 +1,14 @@
+FROM python:3.8-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.deploy requirements.deploy
+RUN pip install -r requirements.deploy
+
+# Copy the API script and the saved model
+COPY app.py app.py
+COPY results/best_model.pkl /app/results/best_model.pkl
+
+# Command to run the Flask API
+CMD ["python", "app.py"]

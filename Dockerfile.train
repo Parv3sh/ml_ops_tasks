@@ -1,0 +1,12 @@
+FROM python:3.8-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.train requirements.train
+RUN pip install -r requirements.train
+
+# Copy the Python scripts
+COPY tune_model.py tune_model.py
+
+CMD ["python", "tune_model.py"]

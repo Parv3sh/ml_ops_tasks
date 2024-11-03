@@ -1,8 +1,0 @@
-scikit-learn
-pandas
-numpy
-joblib
-optuna
-plotly
-sqlalchemy
-psycopg2-binary
