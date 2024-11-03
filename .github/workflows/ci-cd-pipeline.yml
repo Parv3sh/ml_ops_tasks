@@ -20,8 +20,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
-        pip install -r requirements.deploy.txt
+        pip install -r requirements.train
+        pip install -r requirements.deploy
 
     - name: Run tests
       run: |
