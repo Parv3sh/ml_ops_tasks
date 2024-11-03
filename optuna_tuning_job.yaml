@@ -12,6 +12,9 @@ spec:
         image: hyperparameter-tuning:latest
         imagePullPolicy: Never
         command: ["python", "tune_model.py"]
+        env:
+        - name: DB_URL
+          value: "postgresql://user:password@postgres/optuna"
         volumeMounts:
         - name: result-volume
           mountPath: /app/results

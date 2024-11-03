@@ -5,3 +5,4 @@ joblib
 optuna
 plotly
 sqlalchemy
+psycopg2-binary

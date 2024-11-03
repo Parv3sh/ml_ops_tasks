@@ -41,7 +41,7 @@ def objective(trial):
     return mse
 
 if __name__ == '__main__':
-    db_url = 'sqlite:///results/optuna_study.db'
+    db_url = 'postgresql://user:password@postgres/optuna'
     study = optuna.create_study(study_name='optuna_study', direction='minimize', storage=db_url, load_if_exists=True)
     study.optimize(objective, n_trials=100, n_jobs=-1)
     print(f"Best trial: {study.best_trial.value}")
