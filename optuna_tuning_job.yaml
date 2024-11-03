@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: optuna-tuning-job
+spec:
+  parallelism: 4
+  completions: 4
+  template:
+    spec:
+      containers:
+      - name: tuner
+        image: hyperparameter-tuning:latest
+        imagePullPolicy: Never
+        command: ["python", "tune_model.py"]
+        volumeMounts:
+        - name: result-volume
+          mountPath: /app/results
+      volumes:
+      - name: result-volume
+        hostPath:
+          path: /mnt/data/results
+      restartPolicy: Never
