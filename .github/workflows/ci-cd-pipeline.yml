@@ -1,0 +1,38 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install -r requirements.deploy.txt
+
+    - name: Run tests
+      run: |
+        pytest
+
+    - name: Build Docker image
+      run: |
+        docker build -t best-model-api:latest -f Dockerfile.deploy .
+      
+    - name: Push Docker image to GitHub Packages
+      run: |
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        docker tag best-model-api:latest ghcr.io/${{ github.repository }}/best-model-api:latest
+        docker push ghcr.io/${{ github.repository }}/best-model-api:latest
